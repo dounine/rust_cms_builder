@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Alert</key>
+	<string>ياهلا بيك 👋</string>
+	<key>Message</key>
+	<string>تابعنا على قناتنا في التيلگرام للمزيد @IPAFire ✅💯</string>
+	<key>ShowOnce</key>
+	<string>YES</string>
+</dict>
+</plist>
