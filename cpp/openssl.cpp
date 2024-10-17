@@ -258,7 +258,13 @@ bool _GenerateCMS(X509 *scert, EVP_PKEY *spkey, const string &strCDHashData, con
     }
 
     strCMSOutput.clear();
+
+    //print out CMS data
+
     strCMSOutput.append(bptr->data, bptr->length);
+    ZLog::PrintV(">>> CMS Data:\n%d\n", bptr->length);
+    auto a = DataBase64(strCMSOutput);
+    cout << bptr->length << endl;
     ASN1_TYPE_free(type_256);
     return (!strCMSOutput.empty());
 }
