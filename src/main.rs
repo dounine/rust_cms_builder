@@ -89,7 +89,7 @@ pub fn create_cms_signature(
 
     let mut certs = vec![];
     for cert_str in other_certs {
-        certs.extend(CapturedX509Certificate::from_der(cert_str));
+        certs.push(CapturedX509Certificate::from_pem(cert_str).unwrap());
     }
     let builder = cryptographic_message_syntax::SignedDataBuilder::default()
         .content_type(Oid(OID_ID_DATA.as_ref().into()))
