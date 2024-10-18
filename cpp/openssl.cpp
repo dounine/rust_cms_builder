@@ -212,6 +212,8 @@ bool _GenerateCMS(X509 *scert, EVP_PKEY *spkey, const string &strCDHashData, con
         return CMSError();
     }
 
+    auto ss = DataBase64(strAltnateCodeDirectorySlot256);
+
     // add CDHashes
     string sha256;
     char buf[16] = {0};
@@ -230,8 +232,17 @@ bool _GenerateCMS(X509 *scert, EVP_PKEY *spkey, const string &strCDHashData, con
     X509_ATTRIBUTE_set1_object(attr, obj2);
 
     ASN1_TYPE *type_256 = _GenerateASN1Type(sha256);
+//    auto ab = type_256->value.asn1_string->data;
+//    cout << ab << endl;
+    cout << type_256->value.asn1_string->length << endl;
+    cout << type_256->value.asn1_string->data << endl;
+    char* ab = reinterpret_cast<char *>(type_256->value.asn1_string->data);
+    string strData = reinterpret_cast<const char *>(ab);
+    cout << DataBase64(strData) << endl;
     X509_ATTRIBUTE_set1_data(attr, V_ASN1_SEQUENCE,
                              type_256->value.asn1_string->data, type_256->value.asn1_string->length);
+
+
     int addHashSHA = CMS_signed_add1_attr(si, attr);
     if (!addHashSHA) {
         return CMSError();
@@ -264,7 +275,7 @@ bool _GenerateCMS(X509 *scert, EVP_PKEY *spkey, const string &strCDHashData, con
     strCMSOutput.append(bptr->data, bptr->length);
     ZLog::PrintV(">>> CMS Data:\n%d\n", bptr->length);
     auto a = DataBase64(strCMSOutput);
-    cout << bptr->length << endl;
+    cout << DataBase64(strCMSOutput) << endl;
     ASN1_TYPE_free(type_256);
     return (!strCMSOutput.empty());
 }
